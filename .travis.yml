@@ -1,0 +1,17 @@
+language: cpp
+sudo: false
+dis: trusty
+
+compiler:
+  - gcc
+  - clang
+
+env:
+  - BUILD_TYPE=debug
+  - BUILD_TYPE=release 
+
+script:
+  - cd ${TRAVIS_BUILD_DIR}
+  - mkdir -p build && cd build
+  - cmake ../
+  - make -j$(nproc) 
