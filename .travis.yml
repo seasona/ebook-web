@@ -1,6 +1,6 @@
 language: cpp
 sudo: false
-dis: trusty
+dis: Bionic
 
 compiler:
   - gcc
