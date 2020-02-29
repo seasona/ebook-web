@@ -1,12 +1,20 @@
 cmake_minimum_required(VERSION 3.9)
 
 project(Jhttp_server LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
+# use boost aiso only-header method
+## the option is stored in the cache (CMakeCache.txt), so have to rebuild cmake every time
+option(BOOST_ASIO_HEADER_ONLY"boost asio only use header" OFF)
+
+if(BOOST_ASIO_HEADER_ONLY)
+    add_definitions(-DBOOST_ASIO_STANDALONE)
+endif()
 
 include_directories(.)
 include_directories(include)

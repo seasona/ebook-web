@@ -1,10 +1,13 @@
 language: cpp
-sudo: false
-dis: Bionic
+sudo: required
+dis: trusty
 
 compiler:
   - gcc
   - clang
+
+install:
+  - sudo apt-get install libboost-dev
 
 env:
   - BUILD_TYPE=debug
