@@ -94,24 +94,24 @@ char const* HttpStatusSummaryGetter(int status) {
     return (it != status_summary.status_map.end()) ? it->second : "";
 }
 
-std::vector<boost::asio::const_buffer> Response::ToBuffers() {
-    std::vector<boost::asio::const_buffer> write_buffer;
+std::vector<asio::const_buffer> Response::ToBuffers() {
+    std::vector<asio::const_buffer> write_buffer;
     //! the data in asio::buffer must be exist until async_write, so the
     //! response_status must be static
     static std::string response_status =
         "HTTP/" + std::to_string(version_major) + "." +
         std::to_string(version_minor) + " " + std::to_string(status) + " " +
         HttpStatusSummaryGetter(status) + "\r\n";
-    write_buffer.push_back(boost::asio::buffer(response_status));
+    write_buffer.push_back(asio::buffer(response_status));
     for (std::size_t i = 0; i < headers.size(); ++i) {
         auto& h = headers[i];
-        write_buffer.push_back(boost::asio::buffer(h.first));
-        write_buffer.push_back(boost::asio::buffer(name_value_separator));
-        write_buffer.push_back(boost::asio::buffer(h.second));
-        write_buffer.push_back(boost::asio::buffer(crlf));
+        write_buffer.push_back(asio::buffer(h.first));
+        write_buffer.push_back(asio::buffer(name_value_separator));
+        write_buffer.push_back(asio::buffer(h.second));
+        write_buffer.push_back(asio::buffer(crlf));
     }
-    write_buffer.push_back(boost::asio::buffer(crlf));
-    write_buffer.push_back(boost::asio::buffer(content));
+    write_buffer.push_back(asio::buffer(crlf));
+    write_buffer.push_back(asio::buffer(content));
 
     return write_buffer;
 }

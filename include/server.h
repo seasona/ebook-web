@@ -1,6 +1,6 @@
 #pragma once
 
-#include "boost/asio.hpp"
+#include "asio.hpp"
 #include "connection_manager.h"
 #include <string>
 
@@ -17,9 +17,9 @@ private:
 
     const char* doc_root_;
 
-    boost::asio::io_context io_context_;
+    asio::io_context io_context_;
 
-    boost::asio::ip::tcp::acceptor acceptor_;
+    asio::ip::tcp::acceptor acceptor_;
 
     ConnectionManager connection_manager_;
 };

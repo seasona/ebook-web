@@ -8,12 +8,12 @@ Server::Server(const char* address, const char* port, const char* doc_root)
       io_context_(1),
       acceptor_(io_context_),
       connection_manager_() {
-    boost::asio::ip::tcp::resolver resolver(io_context_);
-    boost::asio::ip::tcp::endpoint endpoint =
+    asio::ip::tcp::resolver resolver(io_context_);
+    asio::ip::tcp::endpoint endpoint =
         *(resolver.resolve(address, port).begin());
 
     acceptor_.open(endpoint.protocol());
-    acceptor_.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
+    acceptor_.set_option(asio::ip::tcp::acceptor::reuse_address(true));
     acceptor_.bind(endpoint);
     acceptor_.listen();
 
@@ -21,8 +21,8 @@ Server::Server(const char* address, const char* port, const char* doc_root)
 }
 
 void Server::doAccept() {
-    acceptor_.async_accept([this](boost::system::error_code ec,
-                                  boost::asio::ip::tcp::socket socket) {
+    acceptor_.async_accept([this](asio::error_code ec,
+                                  asio::ip::tcp::socket socket) {
         // TODO check
         if (!acceptor_.is_open()) {
             spdlog::error("The acceptor is not open.");

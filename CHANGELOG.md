@@ -5,7 +5,17 @@
 - try add blushash
 - try add cxxopts
 - try add cookie
-- fix todo 
+- fix todo
+
+## 0.1.1 - 2020/3/1
+
+### Changed
+
+- use asio instead of boost::asio standalone
+
+### fixed
+
+- fix css problem in index.html
 
 ## 0.1.0 - 2020/2/29
 

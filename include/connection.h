@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 #include <array>
-#include "boost/asio.hpp"
+#include "asio.hpp"
 #include "request.h"
 #include "response.h"
 #include "llhttp.h"
@@ -17,7 +17,7 @@ public:
     Connection(const Connection&) = delete;
     Connection& operator=(const Connection&) = delete;
 
-    Connection(boost::asio::ip::tcp::socket socket,
+    Connection(asio::ip::tcp::socket socket,
                ConnectionManager& connection_manager, const char* doc_root);
 
     ~Connection();
@@ -63,7 +63,7 @@ private:
     // reset the data in request and response every time
     void reset();
 
-    boost::asio::ip::tcp::socket socket_;
+    asio::ip::tcp::socket socket_;
 
     // buffer for incoming read data
     std::array<char, 8192> buffer_;
@@ -76,7 +76,7 @@ private:
 
     Response response_;
 
-    boost::asio::streambuf write_buf_;
+    asio::streambuf write_buf_;
 
     ConnectionManager& connection_manager_;
 

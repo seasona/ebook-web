@@ -1,6 +1,6 @@
 #pragma once
 #include "http_status_def.h"
-#include "boost/asio.hpp"
+#include "asio.hpp"
 #include <vector>
 #include <iostream>
 
@@ -12,7 +12,7 @@ struct Response {
     unsigned short version_minor = 1;
     std::string content;
     std::vector<std::pair<std::string, std::string>> headers;
-    std::vector<boost::asio::const_buffer> ToBuffers();
+    std::vector<asio::const_buffer> ToBuffers();
 };
 
 std::ostream& operator<<(std::ostream& os, const Response& response);

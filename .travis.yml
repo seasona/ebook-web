@@ -6,9 +6,6 @@ compiler:
   - gcc
   - clang
 
-install:
-  - sudo apt-get install libboost-dev
-
 env:
   - BUILD_TYPE=debug
   - BUILD_TYPE=release 

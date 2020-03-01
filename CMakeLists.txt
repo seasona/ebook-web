@@ -13,7 +13,7 @@ message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 option(BOOST_ASIO_HEADER_ONLY"boost asio only use header" OFF)
 
 if(BOOST_ASIO_HEADER_ONLY)
-    add_definitions(-DBOOST_ASIO_STANDALONE)
+    add_definitions(-DASIO_STANDALONE)
 endif()
 
 include_directories(.)

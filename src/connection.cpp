@@ -7,13 +7,10 @@
 namespace Jhttp {
 
 static std::unordered_map<std::string, std::string> types = {
-    {"gif", "image/gif"},
-    {"htm", "text/html"},
-    {"html", "text/html"},
-    {"jpg", "image/jpeg"},
-    {"png", "image/png"}};
+    {"gif", "image/gif"},  {"htm", "text/html"}, {"html", "text/html"},
+    {"jpg", "image/jpeg"}, {"png", "image/png"}, {"css", "txt/css"}};
 
-Connection::Connection(boost::asio::ip::tcp::socket socket,
+Connection::Connection(asio::ip::tcp::socket socket,
                        ConnectionManager& connection_manager,
                        const char* doc_root)
     : socket_(std::move(socket)),
@@ -42,11 +39,10 @@ void Connection::doRead() {
     // https://stackoverflow.com/questions/37036611/asio-usage-of-self-shared-pointer-in-the-examples
     auto self(shared_from_this());
     socket_.async_read_some(
-        boost::asio::buffer(buffer_),
-        [this, self](boost::system::error_code ec,
-                     std::size_t bytes_transferred) {
+        asio::buffer(buffer_),
+        [this, self](asio::error_code ec, std::size_t bytes_transferred) {
             if (ec) {
-                if (ec != boost::asio::error::eof) {
+                if (ec != asio::error::eof) {
                     spdlog::error("Client connection closed not graceful. {}",
                                   ec.message());
                 }
@@ -190,12 +186,12 @@ int Connection::handleRequest(const Request& request, Response& response) {
 
 void Connection::doWrite() {
     auto self(shared_from_this());
-    boost::asio::async_write(
+    asio::async_write(
         socket_, response_.ToBuffers(),
-        [this, self](boost::system::error_code ec, std::size_t num) {
+        [this, self](asio::error_code ec, std::size_t num) {
             // TODO add some handle
             if (ec) {
-                if (ec != boost::asio::error::eof) {
+                if (ec != asio::error::eof) {
                     spdlog::error("Client connection closed not graceful.{}",
                                   ec.message());
                 }
@@ -214,12 +210,12 @@ void Connection::doWriteByStreamBuf() {
     os << response_;
 
     auto self(shared_from_this());
-    boost::asio::async_write(
+    asio::async_write(
         socket_, write_buf_,
-        [this, self](boost::system::error_code ec, std::size_t num) {
+        [this, self](asio::error_code ec, std::size_t num) {
             // TODO add some handle
             if (ec) {
-                if (ec != boost::asio::error::eof) {
+                if (ec != asio::error::eof) {
                     spdlog::error("Client connection closed not graceful.{}",
                                   ec.message());
                 }
