@@ -180,8 +180,8 @@ bool Zipper::createDir(const std::string& dir, const std::string& parent) {
 #endif
 }
 
-void Zipper::extractToFile(const std::string& file_path,
-                           const std::string& out_directory) {
+std::string Zipper::extractToFile(const std::string& file_path,
+                                  const std::string& out_directory) {
     unzFile zfile = unzOpen64(file_path.c_str());
 
     std::string zip_base = file_path.substr(file_path.find_last_of("/\\") + 1);
@@ -200,7 +200,7 @@ void Zipper::extractToFile(const std::string& file_path,
             unzGetCurrentFileInfo64(zfile, &file_info, file_name, k_path_length,
                                     NULL, 0, NULL, 0);
 
-            // make a directory of file name 
+            // make a directory of file name
             std::string full_path;
             if (out_directory.empty()) {
                 full_path = zip_name + k_separator + std::string(file_name);
@@ -241,6 +241,8 @@ void Zipper::extractToFile(const std::string& file_path,
 
         } while ((res = unzGoToNextFile(zfile)) == UNZ_OK);
     }
+
+    return out_directory + zip_name;
 }
 
 }  // namespace Jepub

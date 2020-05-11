@@ -13,9 +13,9 @@ int main(int argc, char** argv) {
         }
 
         Jepub::Zipper zipper;
-        zipper.extractToFile(argv[3]);
+        std::string unzip_path = zipper.extractToFile(argv[3]);
 
-        Jhttp::Server s(argv[1], argv[2], argv[3]);
+        Jhttp::Server s(argv[1], argv[2], unzip_path.c_str());
         s.run();
 
     } catch (std::exception& e) {

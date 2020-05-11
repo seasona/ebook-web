@@ -15,7 +15,7 @@ public:
      * @param file_path the zip file path
      * @param out_directory set extracted file to this directory
      */
-    void extractToFile(const std::string& file_path,
+    std::string extractToFile(const std::string& file_path,
                        const std::string& out_directory = "");
 
 private:
