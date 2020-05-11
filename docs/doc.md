@@ -36,6 +36,20 @@ epub的目录在`toc.ncx`文件下，xml的解析不是什么问题，主要的�
 
 但是nlohmann/json的生成感觉很不好用，或者是我还不熟悉，所以xml转json我暂时还写不出来，现在是利用github上一个xml转json的库来进行，但是这个库依赖于rapidjson和rapidxml，所以又得封装一层，而且rapidxml太老了，是不支持宽字符的，所以这块是需要重写的，现在的基本功能是完成了
 
+### epub文件处理
+
+epub的结构就是html+zip，所以使用minizip将其解压到临时文件夹即可，比如`tmp/`下，这样也就是普通后端处理
+
+Q: minizip中没有直接解压到本地的接口，所以需要自己进行对每个entry进行读取封装，但是对于在本地创建文件时需要创建目录，这里有些麻烦，fopen等是不能创建目录的
+A: github上有个对minizip的封装库zipper，不过我只需要其中的解压到本地功能，所以自己写一个算了，C++17中有`<filesystem>`可以使用`create_directory`创建目录
+
+### 模板渲染后的数据如何写入response
+
+connection中response与模板渲染后的数据如何关联起来，现在是在connection中的handleRequest中将response中的内容填充进去，耦合太强了，需要加入中间层，而且内容应该共用。并且应该对于模板进行选择操作，即可选是否载入模板
+
+### 暂时先做一个cli工具
+
+
 ## 结构
 
 

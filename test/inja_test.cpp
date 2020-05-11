@@ -27,7 +27,7 @@ int main(const int argc, const char *const argv[]) {
     inja::Environment env;
     env.set_trim_blocks(true);
     env.set_lstrip_blocks(true);
-    std::string result = env.render_file("./template.html", data);
+    std::string result = env.render_file("../../web/template.html", data);
     std::cout << result << std::endl;
 
     return 0;
