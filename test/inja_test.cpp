@@ -1,9 +1,9 @@
 #include "inja.hpp"
 #include "nlohmann/json.hpp"
 #include "xml2json.hpp"
-#include <string>
 #include <iomanip>
 #include <iostream>
+#include <string>
 
 std::string convert(const std::istream &input) {
     std::ostringstream oss;

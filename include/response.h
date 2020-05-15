@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 
-namespace Jhttp {
+namespace Jepub {
 
 struct Response {
     int status = HTTP_STATUS_OK;
@@ -17,4 +17,4 @@ struct Response {
 
 std::ostream& operator<<(std::ostream& os, const Response& response);
 
-}  // namespace Jhttp
+}  // namespace Jepub

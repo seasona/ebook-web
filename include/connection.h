@@ -7,8 +7,9 @@
 #include "request.h"
 #include "response.h"
 #include "llhttp.h"
+#include "templates.h"
 
-namespace Jhttp {
+namespace Jepub {
 
 class ConnectionManager;
 
@@ -18,7 +19,8 @@ public:
     Connection& operator=(const Connection&) = delete;
 
     Connection(asio::ip::tcp::socket socket,
-               ConnectionManager& connection_manager, const char* doc_root);
+               ConnectionManager& connection_manager, const char* doc_root,
+               Templates& t);
 
     ~Connection();
 
@@ -44,6 +46,9 @@ private:
 
     // find the Content-Type according to the file type
     std::string extensionToType(const std::string& extension);
+
+    // url decode 
+    std::string urlDecode(const std::string &str_source);
 
     void initParser();
 
@@ -81,8 +86,10 @@ private:
     ConnectionManager& connection_manager_;
 
     const char* doc_root_;
+
+    Templates& templates_;
 };
 
 typedef std::shared_ptr<Connection> ConnectionPtr;
 
-}  // namespace Jhttp
+}  // namespace Jepub

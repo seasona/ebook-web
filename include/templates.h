@@ -1,10 +1,11 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+
 #include "inja.hpp"
 #include "nlohmann/json.hpp"
 #include "xml2json.hpp"
-#include <string>
-#include <iostream>
 
 namespace Jepub {
 
@@ -15,20 +16,28 @@ public:
 
     /**
      * @brief use inja to parse template file
-     * @param ncx_path the directory ncx file
-     * @param template_file the website template_file
      * @return std::string the string parsed
      */
-    std::string parse(const std::string &ncx_path,
-                      const std::string &template_path);
+    std::string parse();
 
     // convert xml file to json
-    void convert(const std::istream &ncx_path);
+    void convert();
+
+    void setNcxPath(const std::string& ncx_path) { ncx_path_ = ncx_path; }
+
+    const std::string& getNcxPath() { return ncx_path_; }
+
+    void setTemplatePath(const std::string& template_path) {
+        template_path_ = template_path;
+    }
+
+    const std::string& getTemplatePath() { return template_path_; }
+
 private:
-    std::string ncx_path;
-    std::string template_path;
-    
-    nlohmann::json ncx;
+    std::string ncx_path_;
+    std::string template_path_;
+
+    nlohmann::json ncx_;
 };
 
 }  // namespace Jepub

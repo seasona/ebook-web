@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 
-project(Jhttp_server LANGUAGES CXX)
+project(Jepub_server LANGUAGES CXX)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE
@@ -24,8 +24,8 @@ add_subdirectory(src)
 add_subdirectory(test)
 
 # unit test
-option(JHTTP_SERVER_TEST OFF)
+option(JEPUB_SERVER_TEST OFF)
 
-if(JHTTP_SERVER_TEST)
+if(JEPUB_SERVER_TEST)
     add_subdirectory(test)
 endif()

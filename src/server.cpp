@@ -1,7 +1,7 @@
 #include "server.h"
 #include "spdlog/spdlog.h"
 
-namespace Jhttp {
+namespace Jepub {
 
 Server::Server(const char* address, const char* port, const char* doc_root)
     : doc_root_(doc_root),
@@ -32,16 +32,25 @@ void Server::doAccept() {
         if (!ec) {
             spdlog::debug("Accepted a socket.");
             connection_manager_.start(std::make_shared<Connection>(
-                std::move(socket), connection_manager_, doc_root_));
+                std::move(socket), connection_manager_, doc_root_, templates_));
         }
 
         doAccept();
     });
 }
 
+void Server::setTemplatePath(std::string template_path) {
+    templates_.setTemplatePath(template_path);
+}
+
 void Server::run() {
     spdlog::info("The server is running.");
+    // TODO different path separator in win
+    std::string ncx_path = std::string(doc_root_) + "/toc.ncx";
+    templates_.setNcxPath(ncx_path);
+    // convert directory xml to json first before server listen
+    templates_.convert();
     io_context_.run();
 }
 
-}  // namespace Jhttp
+}  // namespace Jepub

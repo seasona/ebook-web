@@ -1,21 +1,70 @@
 #include "connection.h"
-#include "spdlog/spdlog.h"
-#include "connection_manager.h"
+
 #include <fstream>
 #include <unordered_map>
 
-namespace Jhttp {
+#include "connection_manager.h"
+#include "spdlog/spdlog.h"
+
+namespace Jepub {
 
 static std::unordered_map<std::string, std::string> types = {
     {"gif", "image/gif"},  {"htm", "text/html"}, {"html", "text/html"},
-    {"jpg", "image/jpeg"}, {"png", "image/png"}, {"css", "txt/css"}};
+    {"jpg", "image/jpeg"}, {"png", "image/png"}, {"css", "text/css"}};
+
+static inline int htoi(char *s) {
+    int value;
+    int c;
+
+    c = ((unsigned char *)s)[0];
+    if (isupper(c)) c = tolower(c);
+    value = (c >= '0' && c <= '9' ? c - '0' : c - 'a' + 10) * 16;
+
+    c = ((unsigned char *)s)[1];
+    if (isupper(c)) c = tolower(c);
+    value += c >= '0' && c <= '9' ? c - '0' : c - 'a' + 10;
+
+    return (value);
+}
+
+std::string Connection::urlDecode(const std::string &str_source) {
+    char const *in_str = str_source.c_str();
+    int in_str_len = strlen(in_str);
+    std::string out_str;
+    char *str;
+
+    str = strdup(in_str);
+
+    char *dest = str;
+    char *data = str;
+
+    while (in_str_len--) {
+        if (*data == '+') {
+            *dest = ' ';
+        } else if (*data == '%' && in_str_len >= 2 &&
+                   isxdigit((int)*(data + 1)) && isxdigit((int)*(data + 2))) {
+            *dest = (char)htoi(data + 1);
+            data += 2;
+            in_str_len -= 2;
+        } else {
+            *dest = *data;
+        }
+        data++;
+        dest++;
+    }
+    *dest = '\0';
+    out_str = str;
+    free(str);
+    return out_str;
+}
 
 Connection::Connection(asio::ip::tcp::socket socket,
                        ConnectionManager& connection_manager,
-                       const char* doc_root)
+                       const char* doc_root, Templates& t)
     : socket_(std::move(socket)),
       connection_manager_(connection_manager),
       doc_root_(doc_root),
+      templates_(t),
       parser_(new llhttp_t) {
     initParserSetting();
     spdlog::debug("Parser setting init done.");
@@ -49,7 +98,7 @@ void Connection::doRead() {
                 // TODO just return or stop in connection_manager?
                 connection_manager_.stop(shared_from_this());
             } else {
-                spdlog::debug("Http request:\n{}", buffer_.data(),
+                spdlog::trace("Http request:\n{}", buffer_.data(),
                               bytes_transferred);
                 auto parsed_errno = llhttp_execute(
                     parser_.get(), buffer_.data(), bytes_transferred);
@@ -134,7 +183,7 @@ std::string Connection::extensionToType(const std::string& extension) {
 }
 
 int Connection::handleRequest(const Request& request, Response& response) {
-    std::string request_path = request.uri;
+    std::string request_path = urlDecode(request.uri);
     response.version_major = request.version_major;
     response.version_minor = request.version_minor;
 
@@ -145,8 +194,20 @@ int Connection::handleRequest(const Request& request, Response& response) {
         return -1;
     }
 
+    // read the template.html and fullfill it with toc.ncx
     if (request_path[request_path.size() - 1] == '/') {
-        request_path += "index.html";
+        // request_path += templates_.getTemplatePath();
+        response_.content.append(templates_.parse());
+
+        // spdlog::debug("Content:\n{}", response.content);
+        spdlog::debug("Content-Length: {0:d}", response.content.size());
+        // template auto deduction
+        response.headers.push_back(std::make_pair(
+            "Content-Length", std::to_string(response.content.size())));
+        response.headers.push_back(
+            std::make_pair("Content-Type", extensionToType("html")));
+
+        return 0;
     }
 
     // deduce the Content-Type by the file type
@@ -157,7 +218,9 @@ int Connection::handleRequest(const Request& request, Response& response) {
         extension = request_path.substr(last_dot_pos + 1);
     }
 
+    // TODO: need to decode url
     std::string full_path = doc_root_ + request_path;
+    
     spdlog::debug("request full_path = {}", full_path);
     std::ifstream is(full_path.c_str(), std::ios::in | std::ios::binary);
 
@@ -173,7 +236,7 @@ int Connection::handleRequest(const Request& request, Response& response) {
     while (is.read(buf, sizeof(buf)).gcount() > 0) {
         response.content.append(buf, is.gcount());
     }
-    spdlog::debug("Content:\n{}", response.content);
+    // spdlog::debug("Content:\n{}", response.content);
     spdlog::debug("Content-Length: {0:d}", response.content.size());
     // template auto deduction
     response.headers.push_back(std::make_pair(
@@ -196,7 +259,7 @@ void Connection::doWrite() {
                                   ec.message());
                 }
             } else {
-                spdlog::debug("Write back to socket.{:d}", num);
+                spdlog::trace("Write back to socket.{:d}", num);
                 // the request data is append, so must be clear every time
                 // response data is also append, so it should be clear too
                 reset();
@@ -220,7 +283,7 @@ void Connection::doWriteByStreamBuf() {
                                   ec.message());
                 }
             } else {
-                spdlog::debug("Write back to socket.{:d}", num);
+                spdlog::trace("Write back to socket.{:d}", num);
                 // the request data is append, so must be clear every time
                 // response data is also append, so it should be clear too
                 reset();
@@ -229,4 +292,4 @@ void Connection::doWriteByStreamBuf() {
         });
 }
 
-}  // namespace Jhttp
+}  // namespace Jepub

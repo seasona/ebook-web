@@ -1,23 +1,28 @@
 #include "templates.h"
+#include "spdlog/spdlog.h"
 
 namespace Jepub {
 
-void Templates::convert(const std::istream &ncx_path) {
+void Templates::convert() {  
+    auto ncx_path = std::ifstream(ncx_path_);
+    if(!ncx_path.is_open()){
+        spdlog::error("Can't open ncx_path");
+    }
     std::ostringstream oss;
     oss << ncx_path.rdbuf();
 
     const auto json_str = xml2json(oss.str().data());
-    ncx = nlohmann::json::parse(json_str);
+    ncx_ = nlohmann::json::parse(json_str);
 }
 
-std::string Templates::parse(const std::string &ncx_path,
-                             const std::string &template_path) {
-    convert(std::ifstream(ncx_path));
-    
+std::string Templates::parse() {
+    this->convert();
+
     inja::Environment env;
     env.set_trim_blocks(true);
     env.set_lstrip_blocks(true);
-    std::string result = env.render_file(template_path, this->ncx);
+    // inja has its own error throw handler
+    std::string result = env.render_file(template_path_, this->ncx_);
     return result;
 }
 

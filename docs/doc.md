@@ -47,6 +47,10 @@ A: github上有个对minizip的封装库zipper，不过我只需要其中的解�
 
 connection中response与模板渲染后的数据如何关联起来，现在是在connection中的handleRequest中将response中的内容填充进去，耦合太强了，需要加入中间层，而且内容应该共用。并且应该对于模板进行选择操作，即可选是否载入模板
 
+### One Definition Rule
+
+期间遇到了ODR问题
+
 ### 暂时先做一个cli工具
 
 

@@ -1,6 +1,6 @@
 #include "connection_manager.h"
 
-namespace Jhttp{
+namespace Jepub{
 
 void ConnectionManager::start(ConnectionPtr c){
     connections_.insert(c);
@@ -19,4 +19,4 @@ void ConnectionManager::stopAll(){
     connections_.clear();
 }
 
-}//namespace Jhttp
+}//namespace Jepub

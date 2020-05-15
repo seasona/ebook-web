@@ -4,11 +4,13 @@
 #include "connection_manager.h"
 #include <string>
 
-namespace Jhttp {
+namespace Jepub {
 
 class Server {
 public:
     Server(const char* address, const char* port, const char* doc_root);
+
+    void setTemplatePath(std::string template_path);
 
     void run();
 
@@ -22,6 +24,8 @@ private:
     asio::ip::tcp::acceptor acceptor_;
 
     ConnectionManager connection_manager_;
+
+    Templates templates_;
 };
 
-}  // namespace Jhttp
+}  // namespace Jepub
