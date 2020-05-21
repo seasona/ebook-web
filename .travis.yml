@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-dis: trusty
+dis: bionic
 
 compiler:
   - gcc
@@ -10,8 +10,11 @@ env:
   - BUILD_TYPE=debug
   - BUILD_TYPE=release 
 
+before_install:
+  - sudo apt-get install -y zlib1g-dev libxml2-dev libminizip-dev
+
 script:
   - cd ${TRAVIS_BUILD_DIR}
   - mkdir -p build && cd build
-  - cmake ../
+  - cmake ../ -DUSE_SYSTEM_LIBS=1  
   - make -j$(nproc) 

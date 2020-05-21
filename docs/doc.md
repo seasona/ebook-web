@@ -1,12 +1,15 @@
-# epub-web
+# ebook-web
 
-使用浏览器阅读epub
+使用浏览器阅读epub和mobi
 
 ## 功能
 
-1. epub的解压，目录生成
-2. 后端传输
-3. 前端书架管理
+- [x] epub的解析与阅读
+- [ ] mobi和azw3的解析与阅读
+- [ ] txt解析与阅读
+- [x] 生成目录跳转
+- [x] http解析，后端传输
+- [ ] 前端书架管理
 
 ## 3rd-party
 
@@ -19,6 +22,7 @@
 - cxxopts
 - nlohmann/json
 - inja
+- libmobi
 
 ## 思路
 
@@ -29,6 +33,8 @@
 5. 利用cxxopts构建命令行
 6. 需要模板引擎来对每本书的目录生成对应的html，找了一下只有inja比较好，但它是依赖json的，所以需要将xml解析再生成json，隔了一层性能差了了一些，不过对于c++来说无所谓了
 7. 云端管理书架，能够上传下载
+
+## 遇到的问题
 
 ### xml生成目录
 
@@ -49,11 +55,27 @@ connection中response与模板渲染后的数据如何关联起来，现在是�
 
 ### One Definition Rule
 
-期间遇到了ODR问题
+期间遇到了ODR问题，xml2json这个库违反了这一原则
 
 ### 暂时先做一个cli工具
 
+本来想的是做一个类似云书库，但是一个最大的问题是写的耦合度太高了，用C++写网络框架，connection中如何将content抽象出来写回，这个地方有点复杂，需要研究一下回调怎么写
+
+### 异步写回的数据生命周期
+
+response中必须使用全局变量，如果使用栈分配的临时变量则客户端无法收到消息，会报错`net::invalid_response_http_header`
+
+```cpp
+static const std::string response_status = "HTTP/1.1 200 OK\r\n";
+buffers.push_back(boost::asio::buffer(response_status));
+```
+
+这是由于异步的特性，`boost::asio::buffer`只是作为一个标记的缓存，本身不对数据进行存储，因此当异步写回时，栈分配的临时变量已经被释放，因此会出现错误。可以使用`boost::asio::streambuf`，它是类似于流传输，保存了传输数据，因此可以确保异步写回时的数据生命周期
 
 ## 结构
 
+
+## 参考文档
+
+- https://wiki.mobileread.com/wiki/MOBI#MOBI_Header
 

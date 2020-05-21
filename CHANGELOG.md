@@ -2,10 +2,24 @@
 
 ## unreleased
 
-- try add blushash
-- try add cxxopts
-- try add cookie
-- fix todo
+- support read mobi
+- add cxxopts
+- support read epub2
+- reduce the degree of coupling
+- implement own xml to json, not use xml2json
+
+## 0.2.0 - 2020/5/16
+
+### Changed
+
+- the server now support read epub3 book
+- Changed the handleReqeust function in Connection
+
+### Added
+
+- add the inja as the template library and wrappered it, it depend on nlohmann::json
+- add xml2json to convert xml to json
+- add minizip and wrapper it to unzip the epub
 
 ## 0.1.1 - 2020/3/1
 

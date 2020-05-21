@@ -5,6 +5,40 @@
     <meta charset="utf-8" />
     <title>{{ncx.docTitle.text}}</title>
     <style type="text/css">
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 300px;
+            overflow: auto;
+            font-family: sans-serif;
+        }
+
+        nav .title {
+            margin: 0;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 1px solid #AAA;
+        }
+
+        nav ul {
+            list-style: none;
+            margin-left: 20px;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 8px 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
         #frame {
             position: fixed;
             left: 320px;
@@ -18,30 +52,21 @@
             width: 100%;
             height: 100%;
         }
-
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 300px;
-            overflow: auto;
-            font-family: sans-serif;
-        }
     </style>
 </head>
 
 <body>
     <nav>
-        <ul>
+        <p class="title">{{ncx.docTitle.text}}</p>
+        <ul class="nav-level1">
             {% for level1 in ncx.navMap.navPoint %}
             <li><a target="content" href="{{level1.content.src}}">{{level1.navLabel.text}}</a></li>
             {% if existsIn(level1, "navPoint") %}
-            <ul>
+            <ul class="nav-level2">
                 {% for level2 in level1.navPoint %}
                 <li><a target="content" href="{{level2.content.src}}">{{level2.navLabel.text}}</a></li>
                 {% if existsIn(level2, "navPoint") %}
-                <ul>
+                <ul class="nav-level3">
                     {% for level3 in level2.navPoint %}
                     <li><a target="content" href="{{level3.content.src}}">{{level3.navLabel.text}}</a></li>
                     {% endfor %}
