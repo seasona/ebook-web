@@ -12,12 +12,12 @@ int main(int argc, char** argv) {
             return 1;
         }
 
-        Jepub::Zipper zipper;
+        Jebook::Zipper zipper;
         std::string unzip_path = zipper.extractToFile(argv[3]);
         // TODO: support epub2
         std::string epub_oepbs = unzip_path + "/OEBPS";
         
-        Jepub::Server s(argv[1], argv[2], epub_oepbs.c_str());
+        Jebook::Server s(argv[1], argv[2], epub_oepbs.c_str());
         s.setTemplatePath("../../web/template.html");
         s.run();
 

@@ -4,7 +4,7 @@
 #include "connection_manager.h"
 #include <string>
 
-namespace Jepub {
+namespace Jebook {
 
 class Server {
 public:
@@ -28,4 +28,4 @@ private:
     Templates templates_;
 };
 
-}  // namespace Jepub
+}  // namespace Jebook

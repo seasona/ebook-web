@@ -3,7 +3,7 @@
 #include "spdlog/spdlog.h"
 #include <sys/stat.h>
 
-namespace Jepub {
+namespace Jebook {
 
 #ifdef WIN32
 #include <io.h>
@@ -245,4 +245,4 @@ std::string Zipper::extractToFile(const std::string& file_path,
     return out_directory + zip_name;
 }
 
-}  // namespace Jepub
+}  // namespace Jebook

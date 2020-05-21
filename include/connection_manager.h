@@ -3,7 +3,7 @@
 #include "connection.h"
 #include <set>
 
-namespace Jepub {
+namespace Jebook {
 
 // manage connections to easily start connection and stop connection when the
 // server shut down
@@ -25,4 +25,4 @@ private:
     std::set<ConnectionPtr> connections_;
 };
 
-}  // namespace Jepub
+}  // namespace Jebook

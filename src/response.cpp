@@ -2,7 +2,7 @@
 #include "spdlog/spdlog.h"
 #include <unordered_map>
 
-namespace Jepub {
+namespace Jebook {
 
 struct HttpStatusSummaryHelper {
     friend char const* HttpStatusSummaryGetter(int);
@@ -127,4 +127,4 @@ std::ostream& operator<<(std::ostream& os, const Response& rep) {
     os << "\r\n" << rep.content;
 }
 
-}  // namespace Jepub
+}  // namespace Jebook

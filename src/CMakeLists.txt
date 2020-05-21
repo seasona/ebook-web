@@ -1,6 +1,6 @@
 
-# aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src JEPUB_SERVER_SRC)
-set(JEPUB_SERVER_SRC
+# aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src JEBOOK_SERVER_SRC)
+set(JEBOOK_SERVER_SRC
     connection_manager.cpp
     connection.cpp
     main.cpp
@@ -10,8 +10,8 @@ set(JEPUB_SERVER_SRC
     templates.cpp
 )
 
-# add_library(${PROJECT_NAME} STATIC ${JEPUB_SERVER_SRC})
-add_executable(${PROJECT_NAME} ${JEPUB_SERVER_SRC})
+# add_library(${PROJECT_NAME} STATIC ${JEBOOK_SERVER_SRC})
+add_executable(${PROJECT_NAME} ${JEBOOK_SERVER_SRC})
 target_link_libraries(${PROJECT_NAME}
     pthread
     ${LLHTTP_LIBRARIES} 

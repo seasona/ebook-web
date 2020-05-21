@@ -7,7 +7,7 @@
 #include "nlohmann/json.hpp"
 #include "xml2json.hpp"
 
-namespace Jepub {
+namespace Jebook {
 
 class Templates {
 public:
@@ -40,4 +40,4 @@ private:
     nlohmann::json ncx_;
 };
 
-}  // namespace Jepub
+}  // namespace Jebook

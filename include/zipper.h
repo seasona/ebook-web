@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace Jepub{
+namespace Jebook{
 
 class Zipper {
 public:
@@ -34,4 +34,4 @@ private:
     bool createDir(const std::string& dir, const std::string& parent = "");
 };
 
-} // namespace Jepub;
+} // namespace Jebook;

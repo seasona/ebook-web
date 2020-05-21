@@ -1,7 +1,7 @@
 #include "templates.h"
 #include "spdlog/spdlog.h"
 
-namespace Jepub {
+namespace Jebook {
 
 void Templates::convert() {  
     auto ncx_path = std::ifstream(ncx_path_);
@@ -26,4 +26,4 @@ std::string Templates::parse() {
     return result;
 }
 
-}  // namespace Jepub
+}  // namespace Jebook

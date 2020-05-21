@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace Jepub {
+namespace Jebook {
 
 struct Request {
     std::string method;
@@ -16,4 +16,4 @@ struct Request {
     std::string body;
 };
 
-}  // namespace Jepub
+}  // namespace Jebook

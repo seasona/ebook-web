@@ -6,7 +6,7 @@
 #include "connection_manager.h"
 #include "spdlog/spdlog.h"
 
-namespace Jepub {
+namespace Jebook {
 
 static std::unordered_map<std::string, std::string> types = {
     {"gif", "image/gif"},  {"htm", "text/html"}, {"html", "text/html"},
@@ -292,4 +292,4 @@ void Connection::doWriteByStreamBuf() {
         });
 }
 
-}  // namespace Jepub
+}  // namespace Jebook

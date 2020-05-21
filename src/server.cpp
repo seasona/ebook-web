@@ -1,7 +1,7 @@
 #include "server.h"
 #include "spdlog/spdlog.h"
 
-namespace Jepub {
+namespace Jebook {
 
 Server::Server(const char* address, const char* port, const char* doc_root)
     : doc_root_(doc_root),
@@ -53,4 +53,4 @@ void Server::run() {
     io_context_.run();
 }
 
-}  // namespace Jepub
+}  // namespace Jebook

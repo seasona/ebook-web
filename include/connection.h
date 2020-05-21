@@ -9,7 +9,7 @@
 #include "llhttp.h"
 #include "templates.h"
 
-namespace Jepub {
+namespace Jebook {
 
 class ConnectionManager;
 
@@ -92,4 +92,4 @@ private:
 
 typedef std::shared_ptr<Connection> ConnectionPtr;
 
-}  // namespace Jepub
+}  // namespace Jebook

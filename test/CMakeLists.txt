@@ -11,4 +11,4 @@
 
 # add_executable(zipper_test zipper_test.cpp)
 # target_include_directories(zipper_test PRIVATE ${CMAKE_SOURCE_DIR}/include)
-# target_link_libraries(zipper_test Jepub_server)
+# target_link_libraries(zipper_test Jebook_server)
