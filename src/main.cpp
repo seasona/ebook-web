@@ -1,23 +1,27 @@
 #include "server.h"
 #include "spdlog/spdlog.h"
-#include "zipper.h"
+#include "ebook.h"
 #include <iostream>
 
 int main(int argc, char** argv) {
-    spdlog::set_level(spdlog::level::debug);
+    spdlog::set_level(spdlog::level::info);
     try {
-        if (argc != 4) {
-            std::cerr << "Usage: http_server <address> <port> <epub_path>"
+        if (argc != 5) {
+            std::cerr << "Usage: http_server <address> <port> <ebook_path> <out_directory>"
                       << std::endl;
             return 1;
         }
 
-        Jebook::Zipper zipper;
-        std::string unzip_path = zipper.extractToFile(argv[3]);
-        // TODO: support epub2
-        std::string epub_oepbs = unzip_path + "/OEBPS";
+        std::string ebook_path(argv[3]);
+        std::string out_directory(argv[4]);
+        Jebook::Ebook ebook(ebook_path, out_directory);
+        std::string result_directory = ebook.parseEbook();
         
-        Jebook::Server s(argv[1], argv[2], epub_oepbs.c_str());
+        // TODO: support epub2
+        std::string oepbs = result_directory + "/OEBPS/";
+        spdlog::info("Ebook parsed result path is {}", oepbs);
+        
+        Jebook::Server s(argv[1], argv[2], oepbs.c_str());
         s.setTemplatePath("../../web/template.html");
         s.run();
 

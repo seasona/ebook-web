@@ -5,7 +5,7 @@
 ## 功能
 
 - [x] epub的解析与阅读
-- [ ] mobi和azw3的解析与阅读
+- [x] mobi和azw3的解析与阅读
 - [ ] txt解析与阅读
 - [x] 生成目录跳转
 - [x] http解析，后端传输
@@ -72,10 +72,13 @@ buffers.push_back(boost::asio::buffer(response_status));
 
 这是由于异步的特性，`boost::asio::buffer`只是作为一个标记的缓存，本身不对数据进行存储，因此当异步写回时，栈分配的临时变量已经被释放，因此会出现错误。可以使用`boost::asio::streambuf`，它是类似于流传输，保存了传输数据，因此可以确保异步写回时的数据生命周期
 
-## 结构
+### mobi结构
+
+可以先看看下面这个文档：
+https://wiki.mobileread.com/wiki/MOBI#MOBI_Header
+
+总体来说，mobi中的信息以链表形式存储，链表信息存储在mobi文件开头的固定字节处
 
 
-## 参考文档
 
-- https://wiki.mobileread.com/wiki/MOBI#MOBI_Header
 

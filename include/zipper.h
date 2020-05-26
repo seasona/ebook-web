@@ -1,7 +1,13 @@
 #pragma once
 #include <string>
 
-namespace Jebook{
+namespace Jebook {
+
+#ifdef WIN32
+const std::string k_separator = "\\";
+#else
+const std::string k_separator = "/";
+#endif
 
 class Zipper {
 public:
@@ -16,7 +22,11 @@ public:
      * @param out_directory set extracted file to this directory
      */
     std::string extractToFile(const std::string& file_path,
-                       const std::string& out_directory = "");
+                              const std::string& out_directory = "");
+
+    bool createDir(const std::string& dir, const std::string& parent = "");
+
+    std::string getDirName(const std::string& path);
 
 private:
     bool isExist(const std::string& path);
@@ -28,10 +38,6 @@ private:
     bool isDir(const std::string& path);
 
     std::string normalize(const std::string& path);
-
-    std::string getDirName(const std::string& path);
-
-    bool createDir(const std::string& dir, const std::string& parent = "");
 };
 
-} // namespace Jebook;
+}  // namespace Jebook

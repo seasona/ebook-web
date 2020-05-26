@@ -20,12 +20,6 @@ typedef struct stat STAT;
 #include <unistd.h>
 #endif
 
-#ifdef WIN32
-const std::string k_separator = "\\";
-#else
-const std::string k_separator = "/";
-#endif
-
 const int k_path_length = 256;
 const int k_buffer_length = 8192;
 
@@ -149,7 +143,7 @@ std::string Zipper::getDirName(const std::string& path) {
 }
 
 // TODO can use std::filesystem::create_directory in c++17 instead, supported
-// from gcc8.1.0
+// from gcc 8.1.0
 bool Zipper::createDir(const std::string& dir, const std::string& parent) {
     std::string Dir;
 
@@ -184,9 +178,6 @@ std::string Zipper::extractToFile(const std::string& file_path,
                                   const std::string& out_directory) {
     unzFile zfile = unzOpen64(file_path.c_str());
 
-    std::string zip_base = file_path.substr(file_path.find_last_of("/\\") + 1);
-    std::string zip_name = zip_base.substr(0, zip_base.find_last_of("."));
-
     if (zfile == NULL) {
         spdlog::error("Can't open the epub file. {}", file_path);
     }
@@ -200,15 +191,8 @@ std::string Zipper::extractToFile(const std::string& file_path,
             unzGetCurrentFileInfo64(zfile, &file_info, file_name, k_path_length,
                                     NULL, 0, NULL, 0);
 
-            // make a directory of file name
-            std::string full_path;
-            if (out_directory.empty()) {
-                full_path = zip_name + k_separator + std::string(file_name);
-            } else {
-                full_path = out_directory + k_separator + zip_name +
-                            k_separator + std::string(file_name);
-            }
-
+            std::string full_path = out_directory + k_separator + std::string(file_name);
+            
             createDir(getDirName(full_path));
 
             // must open current zfile first before unzReadCurrentFile
@@ -242,7 +226,7 @@ std::string Zipper::extractToFile(const std::string& file_path,
         } while ((res = unzGoToNextFile(zfile)) == UNZ_OK);
     }
 
-    return out_directory + zip_name;
+    return out_directory;
 }
 
 }  // namespace Jebook
