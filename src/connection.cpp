@@ -194,6 +194,7 @@ int Connection::handleRequest(const Request& request, Response& response) {
         return -1;
     }
 
+    // TODO reduce the degree of coupling
     // read the template.html and fullfill it with toc.ncx
     if (request_path[request_path.size() - 1] == '/') {
         // request_path += templates_.getTemplatePath();
@@ -259,7 +260,6 @@ void Connection::doWrite() {
                                   ec.message());
                 }
             } else {
-                spdlog::trace("Write back to socket.{:d}", num);
                 // the request data is append, so must be clear every time
                 // response data is also append, so it should be clear too
                 reset();
@@ -283,7 +283,7 @@ void Connection::doWriteByStreamBuf() {
                                   ec.message());
                 }
             } else {
-                spdlog::trace("Write back to socket.{:d}", num);
+                spdlog::trace("Write back {:d} bytes to socket", num);
                 // the request data is append, so must be clear every time
                 // response data is also append, so it should be clear too
                 reset();

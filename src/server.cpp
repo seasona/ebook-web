@@ -30,7 +30,7 @@ void Server::doAccept() {
         }
 
         if (!ec) {
-            spdlog::debug("Accepted a socket.");
+            spdlog::info("Accepted a socket.");
             connection_manager_.start(std::make_shared<Connection>(
                 std::move(socket), connection_manager_, doc_root_, templates_));
         }

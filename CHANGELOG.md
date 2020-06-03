@@ -2,11 +2,18 @@
 
 ## unreleased
 
-- support read mobi
 - add cxxopts
 - support read epub2
 - reduce the degree of coupling
 - implement own xml to json, not use xml2json
+- support read txt
+- transform async + multithread
+
+## 0.3.0 - 2020/5/28
+
+### Added
+
+- support read mobi and azw formart ebook
 
 ## 0.2.0 - 2020/5/16
 

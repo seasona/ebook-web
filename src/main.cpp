@@ -4,7 +4,7 @@
 #include <iostream>
 
 int main(int argc, char** argv) {
-    spdlog::set_level(spdlog::level::info);
+    spdlog::set_level(spdlog::level::debug);
     try {
         if (argc != 5) {
             std::cerr << "Usage: http_server <address> <port> <ebook_path> <out_directory>"
@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
         std::string result_directory = ebook.parseEbook();
         
         // TODO: support epub2
-        std::string oepbs = result_directory + "/OEBPS/";
+        std::string oepbs = result_directory + "/OEBPS";
         spdlog::info("Ebook parsed result path is {}", oepbs);
         
         Jebook::Server s(argv[1], argv[2], oepbs.c_str());
