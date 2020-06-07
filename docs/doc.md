@@ -18,12 +18,13 @@
 - asio
 - llhttp
 - spdlog
-- pugixml
 - cxxopts
 - nlohmann/json
+- xml2json
 - inja
 - libmobi
 - sqlite3
+
 
 ## 思路
 
@@ -60,7 +61,7 @@ connection中response与模板渲染后的数据如何关联起来，现在是�
 
 ### 暂时先做一个cli工具
 
-本来想的是做一个类似云书库，但是一个最大的问题是写的耦合度太高了，用C++写网络框架，connection中如何将content抽象出来写回，这个地方有点复杂，需要研究一下回调怎么写
+本来想的是做一个类似云书库，但是一个最大的问题是写的耦合度太高了，用C++写网络框架，connection中如何将content抽象出来写回，这个地方有点复杂，需要研究一下回调怎么写，目前只能先做成cli形式
 
 ### 异步写回的数据生命周期
 
@@ -80,13 +81,32 @@ https://wiki.mobileread.com/wiki/MOBI#MOBI_Header
 
 总体来说，mobi中的信息以链表形式存储，链表信息存储在mobi文件开头的固定字节处
 
-### txt的分章节
+### txt的切分章节
 
 这块比较难搞，有以下几个问题：
 
 1. 切分章节，可以通过正则表达式来划分，划分成功则将其存储至单章文件
 2. 考虑使用数据库将每章的内容存入sqlite3中
+3. c++中正则对unicode支持很差，只能支持到utf-8，所以要么引入icu库进行统一换算，要么手动对unicode转utf-8
 
-切分章节思路：将每行读入，如果与正则表达式匹配，就打开一个文件将剩下的行写入，并关闭上一个文件
+编码是一个问题，起码要考虑以下三种编码：
+
+1. GB18030，是国内自己的编码标准，不带BOM，两个字节表示一个字，一般下载到的国内小说都是个格式
+2. UTF-8，不带BOM，三个字节表示一个字，部分网络小说是这个格式
+3. ANSI, 这种一般是英文的文本，暂时不考虑，因为我分章节的正则也没考虑英文的情况
+
+如何判断是哪种编码是比较头疼的问题，起码需要区分开GB18030和UTF-8，找了一下有两个库可以用：
+
+- google有一个compact_enc_det库，速度快，对于短文本识别的情况可能较好，应用在Chromium里
+- ICU有Character Set Detection模块，速度可能较CED慢
+
+因为反正最后还要做编码转换的，干脆依赖于ICU了，测试了一下ICU内的`ucsdet_detect`准确率还是可以的
+
+Q: 遇到了边界切分的问题，流读入固定字节的字符时，最后读入的几个字节不一定是一个完整的字符，这是字符边界切分问题
+A: ICU中是没有
+
+https://www.ibm.com/developerworks/cn/opensource/os-cn-icu4c-ls1/index.html
+
+
 
 
