@@ -19,7 +19,7 @@ if(USE_SYSTEM_LIBS)
     find_package(MiniZip)
 endif(USE_SYSTEM_LIBS)
 
-add_subdirectory(extern)
+add_subdirectory(third_party)
 add_subdirectory(src)
 add_subdirectory(test)
 

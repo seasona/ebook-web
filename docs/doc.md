@@ -100,12 +100,16 @@ https://wiki.mobileread.com/wiki/MOBI#MOBI_Header
 - google有一个compact_enc_det库，速度快，对于短文本识别的情况可能较好，应用在Chromium里
 - ICU有Character Set Detection模块，速度可能较CED慢
 
-因为反正最后还要做编码转换的，干脆依赖于ICU了，测试了一下ICU内的`ucsdet_detect`准确率还是可以的
+测试了一下ICU内的`ucsdet_detect`准确率还是可以的
 
 Q: 遇到了边界切分的问题，流读入固定字节的字符时，最后读入的几个字节不一定是一个完整的字符，这是字符边界切分问题
-A: ICU中是没有
+A: ICU中`ucnv_toUnicode`函数中可以通过偏移量`offset`计算出边界，但是很麻烦，而且一个问题是ICU默认转换为UTF-16，想转化为UTF-8还得自己手动再转换一边
 
 https://www.ibm.com/developerworks/cn/opensource/os-cn-icu4c-ls1/index.html
+
+最后还是采用libiconv+CED的方式
+
+libiconv中`size_t res = iconv(cd, &inptr, &leftsize, &outptr, &outsize);`，好就好在会主动处理边界问题，如果出现跨边界字符，会先不将处理并抛出`errno == EINVAL`，所以需要对边界问题单独处理，基本思路是将剩下的字符复制到下一次读取的字符串的开头
 
 
 

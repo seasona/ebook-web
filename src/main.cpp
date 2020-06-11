@@ -7,7 +7,7 @@ int main(int argc, char** argv) {
     spdlog::set_level(spdlog::level::debug);
     try {
         if (argc != 5) {
-            std::cerr << "Usage: http_server <address> <port> <ebook_path> <out_directory>"
+            std::cerr << "Usage: ebook-web <address> <port> <ebook_path> <out_directory>"
                       << std::endl;
             return 1;
         }

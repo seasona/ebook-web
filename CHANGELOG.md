@@ -46,5 +46,6 @@
 - add the module llhttp to parse http request
 - add the module boost::asio as the aysnc framework
 - add the module spdlog as the output log
+- support the basic http parse and networking transform
 
 

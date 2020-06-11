@@ -1,13 +1,69 @@
-# Jhttp_server
+# ebook-web
 
-[![Build Status](https://travis-ci.com/seasona/Jhttp_server.svg?branch=master)](https://travis-ci.com/seasona/Jhttp_server)
+[![Build Status](https://travis-ci.com/seasona/ebook-web.svg?branch=master)](https://travis-ci.com/seasona/ebook-web)
+[![License](https://img.shields.io/github/license/seasona/ebook-web)](https://img.shields.io/github/license/seasona/ebook-web)
 
-## 目标
+ebook-web is a CLI tool to read ebook of epub, mobi, azw3 and txt format.
 
-- 学习一下http的相关知识，asio的使用以及项目的构建
-- 能正常完成http server的基本功能，不考虑multipart和cookie
-- 尝试blurhash
+## Table of Contents
+
+* [About the Project](#about-the-project)
+  * [Feature](#feature)
+  * [Platform](#platform)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+* [Usage](#usage)
+* [License](#license)
 
 
+## About The Project
+
+### Feature
+
+- [x] parse and read epub format ebook
+- [x] parse and read mobi, azw3 format ebook
+- [x] parse and read txt format ebook
+- [x] support create charpter directory of all format ebook
+- [ ] maintain the ebook shelf
+
+### Platform
+
+linux
+
+### Built With
+
+g++ 7.5.0 and higher
+cmake 3.10.2 and higher
+
+## Getting Started
+
+### Prerequisites
+
+ebook-web is depend on zlib, minizip and libxml2, you can choose to build them through sourse code from the ebook-web or use the system lib
+
+```shell
+sudo apt-get install -y zlib1g-dev libxml2-dev libminizip-dev
+```
+
+### Installation
+
+```shell
+cd ebook-web/
+mkdir -p build && cd build
+cmake ../ -DUSE_SYSTEM_LIBS=1  
+make 
+```
+
+## Usage
+
+```shell
+./ebook-web <address> <port> <ebook_path> <out_directory>
+```
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
 
 
