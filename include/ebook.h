@@ -1,17 +1,9 @@
 #pragma once
 
-#include "mobi.h"
 #include "zipper.h"
 #include <string>
 
 namespace Jebook {
-
-enum EbookType {
-    EBOOK_EPUB = 0,
-    EBOOK_MOBI = 1,
-    EBOOK_AZW3 = 2,
-    EBOOK_TXT = 3
-};
 
 /**
  * @brief handle epub, mobi and azw3
@@ -24,25 +16,13 @@ public:
         : book_path_(book_path), out_directory_(out_directory){};
     ~Ebook() = default;
 
-    // get ebook type
-    EbookType getType();
-
     /**
      * @brief parse the ebook and return the parsed directory
      * @return std::string the parsed directory of ebook
      */
-    std::string parseEbook();
+    virtual std::string parse() = 0;
 
-private:
-    // parse mobi and azw3 file and create a file structure like epub
-    std::string parseMobi();
-
-    // parse epub file, basically is unzip the zip file
-    std::string parseEpub();
-
-    // parse normal txt book
-    std::string parseTxt();
-
+protected:
     bool writeIntoFile(std::fstream &fs, const std::string &result_path,
                           const char *buf, size_t size);
 

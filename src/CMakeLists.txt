@@ -9,6 +9,8 @@ set(JEBOOK_SERVER_SRC
     server.cpp
     zipper.cpp
     templates.cpp
+    epub_book.cpp
+    mobi_book.cpp
 )
 
 
