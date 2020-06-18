@@ -8,6 +8,8 @@
 - implement own xml to json, not use xml2json
 - support read txt
 - transform async + multithread
+- decrease dependence of third-party library
+- refactor class ebook to polymorphism
 
 ## 0.3.0 - 2020/5/28
 

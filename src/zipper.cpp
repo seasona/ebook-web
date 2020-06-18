@@ -191,9 +191,14 @@ std::string Zipper::extractToFile(const std::string& file_path,
             unzGetCurrentFileInfo64(zfile, &file_info, file_name, k_path_length,
                                     NULL, 0, NULL, 0);
 
-            std::string full_path = out_directory + k_separator + std::string(file_name);
-            
+            std::string full_path =
+                out_directory + k_separator + std::string(file_name);
+
             createDir(getDirName(full_path));
+
+            if(isDir(full_path)){
+                continue;
+            }
 
             // must open current zfile first before unzReadCurrentFile
             if (unzOpenCurrentFile(zfile) != UNZ_OK) {
@@ -203,7 +208,7 @@ std::string Zipper::extractToFile(const std::string& file_path,
 
             std::FILE* fp = fopen(full_path.c_str(), "w+");
             if (fp == nullptr) {
-                spdlog::error("Can't open file to store. {}", file_path);
+                spdlog::error("Can't open file to store. ({})", full_path);
             }
 
             char buf[k_buffer_length] = {0};

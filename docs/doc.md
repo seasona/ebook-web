@@ -24,6 +24,8 @@
 - inja
 - libmobi
 - sqlite3
+- libiconv
+- compact_enc_det
 
 
 ## 思路
@@ -110,6 +112,15 @@ https://www.ibm.com/developerworks/cn/opensource/os-cn-icu4c-ls1/index.html
 最后还是采用libiconv+CED的方式
 
 libiconv中`size_t res = iconv(cd, &inptr, &leftsize, &outptr, &outsize);`，好就好在会主动处理边界问题，如果出现跨边界字符，会先不将处理并抛出`errno == EINVAL`，所以需要对边界问题单独处理，基本思路是将剩下的字符复制到下一次读取的字符串的开头
+
+### html无法直接读取txt
+
+原来单纯用html是无法打开本地文件的，想了想两种解决方式：
+
+1. 利用html+javascript，找了一下网上的方案，有一种可以使用html的FileReader，但是目前找到的只能使用打开文件按钮来显示打开的文件信息，不知道单纯的点击元素是否能达到该效果
+2. txt转html，这个应该是可以做，但是不知道速度如何，而且说实话这么处理感觉很没必要
+
+因为安全原因，纯靠前端是无法直接打开本地文件的，但是因为ebook-web本身实现了后端，是通过http协议传输字节流的，所以不需要考虑这个问题，直接在后端中打开txt文件并将文本流传输给web即可
 
 
 
