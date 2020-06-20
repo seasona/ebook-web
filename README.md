@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/seasona/ebook-web.svg?branch=master)](https://travis-ci.com/seasona/ebook-web)
 [![License](https://img.shields.io/github/license/seasona/ebook-web)](https://img.shields.io/github/license/seasona/ebook-web)
 
-ebook-web is a CLI tool to read ebook of epub, mobi, azw3 and txt format.
+ebook-web is a CLI tool to read ebook of epub, mobi, azw3 and txt format in your browser
 
 ## Table of Contents
 
@@ -26,7 +26,7 @@ ebook-web is a CLI tool to read ebook of epub, mobi, azw3 and txt format.
 - [x] parse and read mobi, azw3 format ebook
 - [x] parse and read txt format ebook
 - [x] support create charpter directory of all format ebook
-- [ ] maintain the ebook shelf
+- [ ] maintain your local ebook shelf
 
 ### Platform
 
@@ -42,7 +42,7 @@ cmake 3.10.2 and higher
 
 ### Prerequisites
 
-ebook-web is depend on zlib, minizip and libxml2, you can choose to build them through sourse code from the ebook-web or use the system lib
+ebook-web is depend on zlib, minizip and libxml2, you can choose to build them through sourse code from the ebook-web or use the system lib installed locally
 
 ```shell
 sudo apt-get install -y zlib1g-dev libxml2-dev libminizip-dev

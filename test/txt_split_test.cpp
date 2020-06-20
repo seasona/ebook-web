@@ -97,22 +97,22 @@ int main(int argc, char **argv) {
     u_cleanup();  // keep valgrind happy!!
 
     // // char tmp[10000];
-    // std::string tmp;
-    // std::fstream fout;
-    // std::regex chapter_regex("第[零一二三四五六七八九十百千万]+章");
-    // std::smatch base_match;
-    // int col = 1000;
+    std::string tmp;
+    std::fstream fout;
+    std::regex chapter_regex("第[零一二三四五六七八九十百千万]+章");
+    std::smatch base_match;
+    int col = 1000;
 
-    // while (std::getline(fs, tmp) && col--) {
-    //     // should use regex_search not regex_match
-    //     if (std::regex_search(tmp, base_match, chapter_regex)) {
-    //         printf("Catch!\n");
-    //         fout.close();
-    //         fout.open(base_match.str(), std::fstream::out);
-    //     }
-    //     if (fout.is_open()) {
-    //         fout.write(tmp.c_str(), tmp.size());
-    //     }
-    // }
+    while (std::getline(fs, tmp) && col--) {
+        // should use regex_search not regex_match
+        if (std::regex_search(tmp, base_match, chapter_regex)) {
+            printf("Catch!\n");
+            fout.close();
+            fout.open(base_match.str(), std::fstream::out);
+        }
+        if (fout.is_open()) {
+            fout.write(tmp.c_str(), tmp.size());
+        }
+    }
     return 0;
 }

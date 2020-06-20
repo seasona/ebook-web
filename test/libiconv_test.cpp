@@ -17,8 +17,7 @@ int main(int argc, char **argv) {
 
     std::fstream fout;
     fout.open(argv[2], std::fstream::out);
-
-    // int cnt = 10;
+    
     int inbufrest = 0;
     while (fin.read(buf + 4096, 4096).gcount()>0) {
         char *lastptr = buf + 4096 - inbufrest;
@@ -28,15 +27,7 @@ int main(int argc, char **argv) {
         char *outptr = dest;
         size_t outsize = dest_size;
         size_t res = iconv(cd, &inptr, &leftsize, &outptr, &outsize);
-        // std::cout << inptr-lastptr << "--" << inbufrest << std::endl;
-        // if (cnt > 0) {
-        //     printf("leftsize = %d, outsize = %d\n", leftsize, outsize);
-        //     printf("inptr offset = %d, outptr offset = %d\n", inptr -
-        //     lastptr,
-        //            outptr - dest);
-        //     printf("res = %d, errno = %d\n\n", res, errno);
-        //     // cnt--;
-        // }
+
         if (errno == EINVAL) {
             inbufrest = leftsize;
             if (leftsize > 0) {

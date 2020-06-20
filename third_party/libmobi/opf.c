@@ -483,6 +483,8 @@ MOBI_RET mobi_write_ncx(MOBIRawml *rawml, const NCX *ncx, const OPF *opf, uint32
         return MOBI_MALLOC_FAILED;
     }
     xmlTextWriterSetIndent(writer, 1);
+    
+    // <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="zho">
     int xml_ret = xmlTextWriterStartDocument(writer, NULL, NULL, NULL);
     if (xml_ret < 0) { goto cleanup; }
     xml_ret = xmlTextWriterStartElementNS(writer, NULL, BAD_CAST "ncx", NCXNamespace);
