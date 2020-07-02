@@ -2,9 +2,9 @@
 #include "spdlog/spdlog.h"
 #include "epub_book.h"
 #include "mobi_book.h"
+#include "txt_book.h"
 #include <iostream>
 #include <memory>
-
 
 int main(int argc, char** argv) {
     spdlog::set_level(spdlog::level::debug);
@@ -31,6 +31,7 @@ int main(int argc, char** argv) {
         } else if (file_type == "azw3") {
             ebook = std::make_unique<Jebook::MobiBook>(ebook_path, out_directory);
         } else if (file_type == "txt") {
+            ebook = std::make_unique<Jebook::TxtBook>(ebook_path, out_directory);
         }
 
         std::string result_directory = ebook->parse();

@@ -11,6 +11,7 @@ set(JEBOOK_SERVER_SRC
     templates.cpp
     epub_book.cpp
     mobi_book.cpp
+    txt_book.cpp
 )
 
 
@@ -26,6 +27,7 @@ target_link_libraries(${PROJECT_NAME}
     xml2json
     ${MINIZIP_LIBRARIES}
     mobi
+    ced
 )
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/include 

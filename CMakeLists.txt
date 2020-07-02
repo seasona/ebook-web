@@ -21,7 +21,7 @@ endif(USE_SYSTEM_LIBS)
 
 add_subdirectory(third_party)
 add_subdirectory(src)
-add_subdirectory(test)
+# add_subdirectory(test)
 
 # unit test
 option(JEBOOK_SERVER_TEST OFF)

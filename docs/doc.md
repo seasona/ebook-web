@@ -127,6 +127,7 @@ libiconv中`size_t res = iconv(cd, &inptr, &leftsize, &outptr, &outsize);`，好
 
 生成目录的xml库因为libmobi已经选择使用libxml2了，为了不引进多个库，也选择使用libxml2
 
+### url解码
 
 
 

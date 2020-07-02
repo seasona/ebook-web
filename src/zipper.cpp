@@ -74,9 +74,6 @@ std::string Zipper::normalize(const std::string& path) {
         if (Normalized[i] == '\\') Normalized[i] = '/';
 
 #endif
-    // Remove leading './'
-    while (!Normalized.compare(0, 2, "./")) Normalized = Normalized.substr(2);
-
     // Collapse '//' to '/'
     std::string::size_type pos = 1;
 
@@ -87,6 +84,9 @@ std::string Zipper::normalize(const std::string& path) {
 
         Normalized.erase(pos, 1);
     }
+
+     // Remove leading './'
+    while (!Normalized.compare(0, 2, "./")) Normalized = Normalized.substr(2);
 
     // Collapse '/./' to '/'
     pos = 0;
@@ -144,6 +144,7 @@ std::string Zipper::getDirName(const std::string& path) {
 
 // TODO can use std::filesystem::create_directory in c++17 instead, supported
 // from gcc 8.1.0
+// TODO should refeator to refuse these method
 bool Zipper::createDir(const std::string& dir, const std::string& parent) {
     std::string Dir;
 

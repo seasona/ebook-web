@@ -28,6 +28,8 @@ public:
 
     std::string getDirName(const std::string& path);
 
+    std::string normalize(const std::string& path);
+
 private:
     bool isExist(const std::string& path);
 
@@ -36,8 +38,6 @@ private:
     bool isWritable(const std::string& path);
 
     bool isDir(const std::string& path);
-
-    std::string normalize(const std::string& path);
 };
 
 }  // namespace Jebook
