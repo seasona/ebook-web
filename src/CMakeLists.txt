@@ -28,6 +28,7 @@ target_link_libraries(${PROJECT_NAME}
     ${MINIZIP_LIBRARIES}
     mobi
     ced
+    cxxopts
 )
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/include 
