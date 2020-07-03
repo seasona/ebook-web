@@ -15,7 +15,7 @@ set(CMAKE_MODULE_PATH {CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(FetchContent) # 引入该CMake模块
 FetchContent_Declare( # 声明依赖的相关信息
   cxxopts
-  GIT_REPOSITORY git@github.com:jarro2783/cxxopts.git
+  GIT_REPOSITORY https://github.com/jarro2783/cxxopts.git
   GIT_TAG        v2.2.0
   GIT_SHALLOW    TRUE # 不拉取完整历史，相当于`git clone --depth=1`
 )
