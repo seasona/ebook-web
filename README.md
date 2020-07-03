@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/seasona/ebook-web.svg?branch=master)](https://travis-ci.com/seasona/ebook-web)
 [![License](https://img.shields.io/github/license/seasona/ebook-web)](https://img.shields.io/github/license/seasona/ebook-web)
 
-ebook-web is a CLI tool to read ebook of epub, mobi, azw3 and txt format in your browser
+ebook-web is a CLI tool to read epub, mobi, azw3 and txt format ebook easily in your browser
 
 ## Table of Contents
 
@@ -19,6 +19,8 @@ ebook-web is a CLI tool to read ebook of epub, mobi, azw3 and txt format in your
 
 
 ## About The Project
+
+![demo](./image/demo.png)
 
 ### Feature
 
@@ -36,7 +38,7 @@ linux
 
 g++ 7.5.0 and higher
 
-cmake 3.10.2 and higher
+cmake 3.11 and higher
 
 ## Getting Started
 
@@ -60,8 +62,26 @@ make
 ## Usage
 
 ```shell
-./ebook-web <address> <port> <ebook_path> <out_directory>
+Ebook reading CLI tool
+Usage:
+  ./Jebook_server [OPTION...]
+
+  -i, --ip arg         IP address (default: localhost)
+  -p, --port arg       Port (default: 8089)
+  -d, --directory arg  Ebook output directory (default: ./)
+  -t, --template arg   Web template location (default:
+                       ../../web/template.html)
+  -b, --book arg       Ebook location
+      --help           Print help
 ```
+
+Generally, you can use ebook-web simply by:
+
+```
+./Jebook_server -b my_book
+```
+
+then open your browser and enter `http://localhost:8089/`. You can enjoy reading your ebook now! 
 
 ## License
 

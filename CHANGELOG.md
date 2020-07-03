@@ -2,20 +2,38 @@
 
 ## unreleased
 
-- add cxxopts
 - support read epub2
 - reduce the degree of coupling
 - implement own xml to json, not use xml2json
-- support read txt
 - transform async + multithread
 - decrease dependence of third-party library
+
+## 0.4.1 - 2020/7/2
+
+### Added
+
+- add cxxopts
+- improve Interaction convenience
+
+## 0.4.0 - 2020/7/2
+
+### Added
+
+- support read txt format ebook
+- add chapter divided function for txt
+
+## 0.3.1 - 2020/6/18
+
+### Changed
+
 - refactor class ebook to polymorphism
 
 ## 0.3.0 - 2020/5/28
 
 ### Added
 
-- support read mobi and azw formart ebook
+- support read mobi and azw3 format ebook
+- add chapter divided function for mobi and azw3
 
 ## 0.2.0 - 2020/5/16
 

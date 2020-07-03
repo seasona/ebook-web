@@ -9,7 +9,7 @@
 
 cxxopts::ParseResult parse(int argc, char* argv[]) {
     try {
-        cxxopts::Options options(argv[0], " - ebook reading cli tool");
+        cxxopts::Options options(argv[0], "Ebook reading CLI tool");
         options.positional_help("[optional args]").show_positional_help();
 
         options.allow_unrecognised_options().add_options()
