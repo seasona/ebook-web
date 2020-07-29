@@ -7,6 +7,7 @@
 - implement own xml to json, not use xml2json
 - transform async + multithread
 - decrease dependence of third-party library
+- fix the css can't be localed problem
 
 ## 0.4.1 - 2020/7/2
 

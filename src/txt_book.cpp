@@ -2,6 +2,7 @@
 #include "iconv.h"
 #include "spdlog/spdlog.h"
 #include "libxml/xmlwriter.h"
+#include "util.h"
 #include <regex>
 #include <fstream>
 #include <iostream>
@@ -199,7 +200,7 @@ std::string TxtBook::parse() {
     if (encode_ == CHINESE_GB) {
         // the txt ebook is encode by GB, should convert to UTF-8
         new_book_path =
-            zipper_.normalize(out_directory_ + k_separator + book_name +
+            Util::normalize(out_directory_ + k_separator + book_name +
                               k_separator + book_name + "_utf.txt");
         spdlog::debug("Convert to encode UTF-8 file {}", new_book_path);
         zipper_.createDir(zipper_.getDirName(new_book_path));
@@ -226,7 +227,7 @@ std::string TxtBook::parse() {
 
     // create directory
     std::string new_dir =
-        zipper_.normalize(out_directory_ + k_separator + book_name);
+        Util::normalize(out_directory_ + k_separator + book_name);
 
     std::string text_dir =
         new_dir + k_separator + "OEBPS" + k_separator + "Text";

@@ -5,6 +5,7 @@
 
 #include "connection_manager.h"
 #include "spdlog/spdlog.h"
+#include "util.h"
 
 namespace Jebook {
 
@@ -220,7 +221,7 @@ int Connection::handleRequest(const Request& request, Response& response) {
     }
 
     // TODO: need to decode url
-    std::string full_path = doc_root_ + request_path;
+    std::string full_path = Util::normalize(doc_root_ + request_path);
     
     spdlog::debug("request full_path = {}", full_path);
     std::ifstream is(full_path.c_str(), std::ios::in | std::ios::binary);

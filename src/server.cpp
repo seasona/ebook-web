@@ -3,11 +3,12 @@
 
 namespace Jebook {
 
-Server::Server(const char* address, const char* port, const char* doc_root)
+Server::Server(const char* address, const char* port, const char* doc_root, const Templates& t)
     : doc_root_(doc_root),
       io_context_(1),
       acceptor_(io_context_),
-      connection_manager_() {
+      connection_manager_(),
+      templates_(t) {
     asio::ip::tcp::resolver resolver(io_context_);
     asio::ip::tcp::endpoint endpoint =
         *(resolver.resolve(address, port).begin());
@@ -39,15 +40,8 @@ void Server::doAccept() {
     });
 }
 
-void Server::setTemplatePath(std::string template_path) {
-    templates_.setTemplatePath(template_path);
-}
-
 void Server::run() {
     spdlog::info("The server is running.");
-    // TODO different path separator in win
-    std::string ncx_path = std::string(doc_root_) + "/toc.ncx";
-    templates_.setNcxPath(ncx_path);
     // convert directory xml to json first before server listen
     templates_.convert();
     io_context_.run();

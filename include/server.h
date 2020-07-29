@@ -8,9 +8,7 @@ namespace Jebook {
 
 class Server {
 public:
-    Server(const char* address, const char* port, const char* doc_root);
-
-    void setTemplatePath(std::string template_path);
+    Server(const char* address, const char* port, const char* doc_root, const Templates &t);
 
     void run();
 

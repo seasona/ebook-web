@@ -12,6 +12,8 @@ namespace Jebook {
 class Templates {
 public:
     Templates() = default;
+    Templates(const std::string& template_path, const std::string& ncx_path)
+        : template_path_(template_path), ncx_path_(ncx_path) {}
     ~Templates() = default;
 
     /**

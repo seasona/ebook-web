@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>{{ncx.docTitle.text}}</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <style type="text/css">
         nav {
             position: fixed;
@@ -70,26 +71,26 @@
             {% for level1 in ncx.navMap.navPoint %}
             {% if existsIn(level1, "navPoint") %}
                 <details>
-                <summary href="{{level1.content.src}}">{{level1.navLabel.text}}</summary>
+                <summary href="{{ncx.docTitle.text}}/OEBPS/{{level1.content.src}}">{{level1.navLabel.text}}</summary>
                 <ul class="nav-level2">
                 {% for level2 in level1.navPoint %}
                 {% if existsIn(level2, "navPoint") %}
                     <details>
-                    <summary href="{{level2.content.src}}">{{level2.navLabel.text}}</summary>
+                    <summary href="{{ncx.docTitle.text}}/OEBPS/{{level2.content.src}}">{{level2.navLabel.text}}</summary>
                     <ul class="nav-level3">
                     {% for level3 in level2.navPoint %}
-                    <li><a target="content" href="{{level3.content.src}}">{{level3.navLabel.text}}</a></li>
+                    <li><a target="content" href="{{ncx.docTitle.text}}/OEBPS/{{level3.content.src}}">{{level3.navLabel.text}}</a></li>
                     {% endfor %}
                     </ul>
                     </details>
                 {% else %}
-                    <li><a target="content" href="{{level2.content.src}}">{{level2.navLabel.text}}</a></li>
+                    <li><a target="content" href="{{ncx.docTitle.text}}/OEBPS/{{level2.content.src}}">{{level2.navLabel.text}}</a></li>
                 {% endif %}
                 {% endfor %}
                 </ul>
                 </details>
             {% else %}
-                <li><a target="content" href="{{level1.content.src}}">{{level1.navLabel.text}}</a></li>
+                <li><a target="content" href="{{ncx.docTitle.text}}/OEBPS/{{level1.content.src}}">{{level1.navLabel.text}}</a></li>
             {% endif %}
             {% endfor %}  
             </ul>

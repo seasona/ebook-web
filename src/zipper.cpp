@@ -1,6 +1,7 @@
 #include "zipper.h"
 #include "unzip.h"
 #include "spdlog/spdlog.h"
+#include "util.h"
 #include <sys/stat.h>
 
 namespace Jebook {
@@ -63,63 +64,6 @@ bool Zipper::isDir(const std::string& path) {
 #endif
 }
 
-std::string Zipper::normalize(const std::string& path) {
-    std::string Normalized = path;
-
-#ifdef WIN32
-    // converts all '\' to '/' (only on WIN32)
-    size_t i, imax;
-
-    for (i = 0, imax = Normalized.length(); i < imax; i++)
-        if (Normalized[i] == '\\') Normalized[i] = '/';
-
-#endif
-    // Collapse '//' to '/'
-    std::string::size_type pos = 1;
-
-    while (true) {
-        pos = Normalized.find("//", pos);
-
-        if (pos == std::string::npos) break;
-
-        Normalized.erase(pos, 1);
-    }
-
-     // Remove leading './'
-    while (!Normalized.compare(0, 2, "./")) Normalized = Normalized.substr(2);
-
-    // Collapse '/./' to '/'
-    pos = 0;
-
-    while (true) {
-        pos = Normalized.find("/./", pos);
-
-        if (pos == std::string::npos) break;
-
-        Normalized.erase(pos, 2);
-    }
-
-    // Collapse '[^/]+/../' to '/'
-    std::string::size_type start = Normalized.length();
-
-    while (true) {
-        pos = Normalized.rfind("/../", start);
-
-        if (pos == std::string::npos) break;
-
-        start = Normalized.rfind('/', pos - 1);
-
-        if (start == std::string::npos) break;
-
-        if (!Normalized.compare(start, 4, "/../")) continue;
-
-        Normalized.erase(start, pos - start + 3);
-        start = Normalized.length();
-    }
-
-    return Normalized;
-}
-
 std::string Zipper::getDirName(const std::string& path) {
     if (path == "") return path;
 
@@ -159,7 +103,7 @@ bool Zipper::createDir(const std::string& dir, const std::string& parent) {
     if (!parent.empty() && (!isDir(parent) || !isWritable(parent)))
         return false;
 
-    Dir = normalize(Dir);
+    Dir = Util::normalize(Dir);
 
     // ensure we have parent
     std::string actualParent = getDirName(Dir);

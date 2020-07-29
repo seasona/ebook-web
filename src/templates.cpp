@@ -12,6 +12,7 @@ void Templates::convert() {
     oss << ncx_path.rdbuf();
 
     const auto json_str = xml2json(oss.str().data());
+    spdlog::debug("ncx_path_ is: {}", ncx_path_);
     ncx_ = nlohmann::json::parse(json_str);
 }
 
@@ -21,6 +22,8 @@ std::string Templates::parse() {
     inja::Environment env;
     env.set_trim_blocks(true);
     env.set_lstrip_blocks(true);
+
+    spdlog::debug("template_path is: {}", template_path_);
     // inja has its own error throw handler
     std::string result = env.render_file(template_path_, this->ncx_);
     return result;

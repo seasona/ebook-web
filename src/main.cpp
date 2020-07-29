@@ -16,6 +16,7 @@ cxxopts::ParseResult parse(int argc, char* argv[]) {
             ("i,ip", "IP address", cxxopts::value<std::string>()->default_value("localhost"))
             ("p,port", "Port", cxxopts::value<std::string>()->default_value("8089"))
             ("d,directory", "Ebook output directory", cxxopts::value<std::string>()->default_value("./"))
+            ("w,web", "Web file location directory", cxxopts::value<std::string>()->default_value("../../web/"))
             ("t,template", "Web template location", cxxopts::value<std::string>()->default_value("../../web/template.html"))
             ("b,book", "Ebook location", cxxopts::value<std::string>())
             ("help", "Print help")
@@ -28,6 +29,7 @@ cxxopts::ParseResult parse(int argc, char* argv[]) {
             exit(0);
         }
 
+        std::string web_dir, template_path;
         std::string ebook_path;
         std::string out_directory;
         std::string ip, port;
@@ -42,7 +44,7 @@ cxxopts::ParseResult parse(int argc, char* argv[]) {
         if(result.count("directory")){
             out_directory = result["directory"].as<std::string>();
         }else{
-            out_directory = "./";
+            out_directory = "../../web/";
         }
 
         if(result.count("ip")){
@@ -55,6 +57,18 @@ cxxopts::ParseResult parse(int argc, char* argv[]) {
             port = result["port"].as<std::string>();
         }else{
             port = "8089";
+        }
+
+        if(result.count("web")){
+            web_dir = result["web"].as<std::string>();
+        }else{
+            web_dir = "../../web/";
+        }
+
+        if(result.count("template")){
+            template_path = result["template"].as<std::string>();
+        }else{
+            template_path = "../../web/template.html";
         }
 
         std::unique_ptr<Jebook::Ebook> ebook;
@@ -79,17 +93,12 @@ cxxopts::ParseResult parse(int argc, char* argv[]) {
         std::string result_directory = ebook->parse();
 
         // TODO: support epub2
-        std::string oepbs = result_directory + "/OEBPS";
-        spdlog::info("Ebook parsed result path is {}", oepbs);
+        std::string ncx_path = result_directory + "/OEBPS/toc.ncx";
+        spdlog::info("Ebook parsed result path is {}", ncx_path);
 
-        Jebook::Server server(ip.c_str(), port.c_str(), oepbs.c_str());
+        Jebook::Templates temp(template_path, ncx_path);
 
-        if(result.count("template")){
-            auto& t = result["template"].as<std::string>();
-            server.setTemplatePath(t);
-        }else{
-            server.setTemplatePath("../../web/template.html");
-        }
+        Jebook::Server server(ip.c_str(), port.c_str(), web_dir.c_str(), temp);
 
         server.run();
 

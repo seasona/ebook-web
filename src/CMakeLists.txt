@@ -12,6 +12,7 @@ set(JEBOOK_SERVER_SRC
     epub_book.cpp
     mobi_book.cpp
     txt_book.cpp
+    util.cpp
 )
 
 
