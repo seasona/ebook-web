@@ -16,9 +16,16 @@ if(NOT GTEST_FOUND)
     if(NOT gtest_POPULATED) # 确保只拉取一次
         FetchContent_Populate(gtest) # 此函数执行后将设置AAA_POPULATED变量
         # 通过AAA_SOURCE_DIR就可以拿到源码所在目录的路径了，除此外还有其他变量可以用，见CMake文档
-        message(STATUS "gtest source dir: ${gtest_SOURCE_DIR}")
-        add_subdirectory(${gtest_SOURCE_DIR})
+        message(STATUS "gtest source dir: ${gtest_SOURCE_DIR}; gtest binary dir: ${gtest_BINARY_DIR}")
+        add_subdirectory(
+            ${gtest_SOURCE_DIR} 
+            ${gtest_BINARY_DIR}
+        )
     endif ()
+
+    set(GTest gtest_main)
+else()
+    set(GTest GTest::gtest_main)
 endif()
 
 set(UNIT_TEST_LIST 
@@ -27,6 +34,6 @@ set(UNIT_TEST_LIST
 
 foreach(src ${UNIT_TEST_LIST})
     add_executable(${src} ${src}.cpp)
-    target_link_libraries(${src} ced GTest::GTest GTest::Main)
+    target_link_libraries(${src} ced ${GTest})
     add_test(${src} ${src})
 endforeach()
