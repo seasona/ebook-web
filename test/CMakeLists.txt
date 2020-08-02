@@ -13,7 +13,7 @@
 # target_include_directories(zipper_test PRIVATE ${CMAKE_SOURCE_DIR}/include)
 # target_link_libraries(zipper_test Jebook_server)
 
-find_package(GTest REQUIRED)
+find_package(GTest)
 
 if(NOT GTEST_FOUND)
     message(STATUS "There is no gtest local, so fetch from github. Version: release-1.10.0")
