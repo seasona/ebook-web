@@ -18,9 +18,7 @@ std::string MobiBook::parse() {
     /* Initialize main MOBIData structure */
     /* Must be deallocated with mobi_free() when not needed */
     MOBIData *m = mobi_init();
-    if (m == NULL) {
-        spdlog::error("MOBIData initialize failed");
-    }
+    if (m == NULL) { spdlog::error("MOBIData initialize failed"); }
 
     /* Open file for reading */
     FILE *file = fopen(book_path_.data(), "rb");
@@ -132,7 +130,8 @@ std::string MobiBook::parse() {
                     snprintf(partname, sizeof(partname), "OEBPS/content.opf");
                 } else if (file_meta.type == T_NCX) {
                     snprintf(partname, sizeof(partname), "OEBPS/toc.ncx");
-                } else {
+                } else if (file_meta.type == T_JPG || file_meta.type == T_GIF ||
+                           file_meta.type == T_PNG || file_meta.type == T_BMP) {
                     snprintf(partname, sizeof(partname),
                              "OEBPS/resource%05zu.%s", curr->uid,
                              file_meta.extension);

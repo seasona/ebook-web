@@ -22,6 +22,8 @@ public:
      */
     virtual std::string parse() = 0;
 
+    std::string getBookName(const std::string& book_path);
+
 protected:
     bool writeIntoFile(std::fstream &fs, const std::string &result_path,
                           const char *buf, size_t size);

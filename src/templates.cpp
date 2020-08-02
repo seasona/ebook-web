@@ -14,6 +14,8 @@ void Templates::convert() {
     const auto json_str = xml2json(oss.str().data());
     spdlog::debug("ncx_path_ is: {}", ncx_path_);
     ncx_ = nlohmann::json::parse(json_str);
+    auto pos = result_directory_.find_last_of("/");
+    ncx_["decompressedDir"] = book_name_;
 }
 
 std::string Templates::parse() {

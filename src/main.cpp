@@ -93,10 +93,9 @@ cxxopts::ParseResult parse(int argc, char* argv[]) {
         std::string result_directory = ebook->parse();
 
         // TODO: support epub2
-        std::string ncx_path = result_directory + "/OEBPS/toc.ncx";
-        spdlog::info("Ebook parsed result path is {}", ncx_path);
+        spdlog::info("Ebook parsed result path is {}", result_directory);
 
-        Jebook::Templates temp(template_path, ncx_path);
+        Jebook::Templates temp(template_path, result_directory, ebook->getBookName(ebook_path));
 
         Jebook::Server server(ip.c_str(), port.c_str(), web_dir.c_str(), temp);
 

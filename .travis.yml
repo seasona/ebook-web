@@ -16,5 +16,6 @@ before_install:
 script:
   - cd ${TRAVIS_BUILD_DIR}
   - mkdir -p build && cd build
-  - cmake ../ -DUSE_SYSTEM_LIBS=1  
+  - cmake ../ -DUSE_SYSTEM_LIBS=ON -DJEBOOK_SERVER_TEST=ON 
   - make -j$(nproc) 
+  - make test

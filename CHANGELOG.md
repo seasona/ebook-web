@@ -8,6 +8,7 @@
 - transform async + multithread
 - decrease dependence of third-party library
 - fix the css can't be localed problem
+- use the bootstrap to rewrite front end interface
 
 ## 0.4.1 - 2020/7/2
 

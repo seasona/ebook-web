@@ -1,5 +1,38 @@
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    overflow: auto;
+    font-family: sans-serif;
+}
 
- #frame {
+nav .title {
+    margin: 0;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-bottom: 1px solid #AAA;
+}
+
+nav ul {
+    list-style: none;
+    margin-left: 20px;
+    padding: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 8px 15px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+#frame {
     position: fixed;
     left: 320px;
     right: 0;
@@ -13,12 +46,10 @@
     height: 100%;
 }
 
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 300px;
-    overflow: auto;
-    font-family: sans-serif;
+summary {
+    cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+    display: none;
 }

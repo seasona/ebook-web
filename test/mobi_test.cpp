@@ -1,5 +1,5 @@
 #include "mobi.h"
-#include <cstdio
+#include <cstdio>
 
 int main(int argc, char** argv) {
     /* Initialize main MOBIData structure */

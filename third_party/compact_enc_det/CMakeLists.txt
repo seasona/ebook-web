@@ -65,8 +65,6 @@ set(CED_LIBRARY_SOURCES
     util/languages/languages.cc
     )
 
-message(STATUS "${CMAKE_CURRENT_SOURCE_DIR}")
-
 add_library(ced ${CED_LIBRARY_SOURCES})
 target_include_directories(ced PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 

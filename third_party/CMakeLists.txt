@@ -1,6 +1,7 @@
 add_subdirectory(llhttp)
 add_subdirectory(libmobi)
 add_subdirectory(compact_enc_det)
+add_subdirectory(cxxopts)
 
 ## A primary use-case for INTERFACE libraries is header-only libraries.
 ## https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#interface-libraries
