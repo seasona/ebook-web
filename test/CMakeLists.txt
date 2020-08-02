@@ -15,7 +15,7 @@
 
 find_package(GTest REQUIRED)
 
-if(NOT GTest_FOUND)
+if(NOT GTEST_FOUND)
     message(STATUS "There is no gtest local, so fetch from github. Version: release-1.10.0")
     FetchContent_Declare( # 声明依赖的相关信息
         gtest
