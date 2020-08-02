@@ -55,8 +55,16 @@ sudo apt-get install -y zlib1g-dev libxml2-dev libminizip-dev
 ```shell
 cd ebook-web/
 mkdir -p build && cd build
-cmake ../ -DUSE_SYSTEM_LIBS=1  
+cmake ../ -DUSE_SYSTEM_LIBS=ON  
 make 
+```
+
+The unit test option is `JEBOOK_SERVER_TEST`, if you want to run test, use:
+
+```shell
+- cmake ../ -DUSE_SYSTEM_LIBS=ON -DJEBOOK_SERVER_TEST=ON 
+- make -j$(nproc) 
+- make test
 ```
 
 ## Usage
